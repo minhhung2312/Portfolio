@@ -25,3 +25,33 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+// Hiệu ứng chữ chạy
+const spanElement = document.querySelector('.info__header .my-name');
+const phrases = ['Frontend Developer', 'Minh Hung'];
+let phraseIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+function typeEffect() {
+    const currentPhrase = phrases[phraseIndex];
+    
+    if (!isDeleting) {
+        spanElement.innerText = currentPhrase.slice(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === currentPhrase.length) {
+            isDeleting = true;
+            setTimeout(typeEffect, 1000); 
+            return;
+        }
+    } else {
+        spanElement.innerText = currentPhrase.slice(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length; 
+        }
+    }
+    setTimeout(typeEffect, isDeleting ? 50 : 100); 
+}
+typeEffect();
